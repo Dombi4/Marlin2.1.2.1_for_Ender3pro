@@ -1,0 +1,57 @@
+ #define ENDSTOPPULLUP_ZMIN_PROBE
+ #define Z_MIN_PROBE_ENDSTOP_INVERTING true - не вышло, поставил false
+ //#define ENDSTOPPULLDOWN_ZMIN_PROBE -??? что это?
+ #define BLTOUCH
+ #define NOZZLE_TO_PROBE_OFFSET { 10, 10, 0 } - измерить
+//#define MIN_SOFTWARE_ENDSTOP_Z
+#define AUTO_BED_LEVELING_BILINEAR
+#define BABYSTEP_ZPROBE_OFFSET 
+#define BABYSTEP_MULTIPLICATOR_Z  1       // (steps or mm) Steps or millimeter distance for each Z babystep - значение 5?
+  #define BABYSTEP_MULTIPLICATOR_XY 1       // (steps or mm) Steps or millimeter distance for each XY babystep - значение 5?
+  #define GRID_MAX_POINTS_X 3 - количество точек проверки
+  #define Z_MIN_PROBE_REPEATABILITY_TEST - тест точности датчика
+  #define RESTORE_LEVELING_AFTER_G28
+  //#define LCD_BED_TRAMMING - меню ручной регулировки стола?
+  #define ENABLE_LEVELING_FADE_HEIGHT - Для использования функции нивелирования кривизны стола к определенной высоте детали нужно проверить, чтобы была раскомментирована строка
+
+  В Configuration.h:
+#define Z_MIN_PROBE_ENDSTOP_INVERTING сделать true( - не делал, у меня и так работало корректно)
+#define Z_HOMING_HEIGHT - убрать комментарий и выставить 5 (чтобы скрепки не сбивало, можно и 10ть поставить)
+
+#define BLTOUCH - убрать комментарий
+Если нет, то следом добавить:
+#if ENABLED(BLTOUCH)
+#define SERVO0_PIN 27
+#endif
+
+Выставить, замерив предварительно X и Y, как видео показано:
+#define NOZZLE_TO_PROBE_OFFSET { X, Y, 0 }
+
+#define MIN_SOFTWARE_ENDSTOP_Z - закомментировать
+
+#define AUTO_BED_LEVELING_BILINEAR - убрать комментарий
+
+#define Z_SAFE_HOMING - убрать комментарий
+*
+В Configuration_ADV.h:
+#define BABYSTEP_ZPROBE_OFFSET - убрать комментарий ???
+
+#define BABYSTEP_MULTIPLICATOR_XY и
+#define BABYSTEP_MULTIPLICATOR_Z - сделать по 5ть
+*
+ВЫСВОБОДИТЬ ПАМЯТЬ:
+В Configuration_ADV.h:
+#define ARC_SUPPORT - закомментировать
+
+В Configuration.h:
+#define SDSUPPORT - закомментировать (т.к. я не пользуюсь SD картой) или #define SLIM_LCD_MENUS - разкомментировать (если пользуетесь SD)
+#define SPEAKER - закомментировать
+*
+P.S. Ещё можно закомментировать, но мне не пришлось из-за отключения SD:
+#define PRINTCOUNTER
+
+#define PRINTJOB_TIMER_AUTOSTART
+#define SHOW_CUSTOM_BOOTSCREEN
+#define SHOW_BOOTSCREEN
+P.S.2. для этой версии образцы конфигов качаются отдельно с сайта, надо помещать конфиги (их 4ре) в папку \Marlin-2.0.x\Marlin\ с заменой, а потом оттуда запускать "Marlin.ino"
+P.S.3. только, что настроил и распечатал паутинку из видео - всё отлично) Надеюсь помог кому-нибудь..)
